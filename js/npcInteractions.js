@@ -421,16 +421,19 @@ window.updateActionButtons = function() {
   if (!window.gameState.inBattle && !window.gameState.inMission) {
     const actionsContainer = document.getElementById('actions');
     
-    // Add NPC interaction buttons
-    if (window.missionSystem.canGetMissionsFrom('commander')) {
+    // Add NPC interaction buttons with null checks
+    if (window.missionSystem && window.missionSystem.canGetMissionsFrom 
+        && window.missionSystem.canGetMissionsFrom('commander')) {
       window.addActionButton('Talk to Commander', 'talk_commander', actionsContainer);
     }
     
-    if (window.missionSystem.canGetMissionsFrom('sergeant')) {
+    if (window.missionSystem && window.missionSystem.canGetMissionsFrom 
+        && window.missionSystem.canGetMissionsFrom('sergeant')) {
       window.addActionButton('Talk to Sergeant', 'talk_sergeant', actionsContainer);
     }
     
-    if (window.missionSystem.canGetMissionsFrom('quartermaster')) {
+    if (window.missionSystem && window.missionSystem.canGetMissionsFrom 
+        && window.missionSystem.canGetMissionsFrom('quartermaster')) {
       window.addActionButton('Talk to Quartermaster', 'talk_quartermaster', actionsContainer);
     }
   }

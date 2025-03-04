@@ -1,0 +1,719 @@
+/* Enhanced UI CSS structure for Soldier of Ibyll */
+
+/* Base Styles */
+:root {
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --primary-color: #a0a0ff;
+  --secondary-color: #4682B4;
+  --accent-color: #ff5f6d;
+  --panel-bg: #1e293b;
+  --dark-panel-bg: #1a1a1a;
+  --border-color: #444;
+  --button-bg: #333;
+  --button-hover: #555;
+  --success-color: #4bff91;
+  --warning-color: #ff4b4b;
+  --info-color: #4bbfff;
+  --health-gradient: linear-gradient(to right, #ff5f6d, #ffc371);
+  --stamina-gradient: linear-gradient(to right, #56ab2f, #a8e063);
+  --morale-gradient: linear-gradient(to right, #4776E6, #8E54E9);
+  --transition-speed: 0.3s;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Courier New', monospace;
+  padding: 20px;
+  line-height: 1.6;
+  transition: background 0.5s;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+#creator, #gameContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* State Transitions */
+.state-transition {
+  transition: opacity var(--transition-speed) ease-in-out, 
+              transform var(--transition-speed) ease-in-out;
+}
+
+.state-hidden {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  transform: translateY(20px);
+}
+
+.state-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.slide-in {
+  animation: slideIn 0.4s ease-out forwards;
+}
+
+.slide-out {
+  animation: slideOut 0.4s ease-in forwards;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideOut {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-30px); opacity: 0; }
+}
+
+/* Button Styles */
+.menu-button, .action-btn {
+  background: var(--button-bg);
+  border: none;
+  color: var(--text-color);
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-button:hover, .action-btn:hover {
+  background: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.menu-button:active, .action-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.menu-button::after, .action-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%);
+  transform-origin: 50% 50%;
+}
+
+.menu-button:focus::after, .action-btn:focus::after {
+  animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+  0% { transform: scale(0, 0); opacity: 0.5; }
+  20% { transform: scale(25, 25); opacity: 0.3; }
+  100% { transform: scale(40, 40); opacity: 0; }
+}
+
+/* Header Styles */
+header {
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+  padding: 10px;
+  background: rgba(30, 41, 59, 0.4);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+#location {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: var(--primary-color);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#timeDisplay, #dayDisplay {
+  text-align: center;
+  margin-bottom: 10px;
+  transition: color 0.5s;
+}
+
+/* Narrative Container */
+#narrative-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+#narrative {
+  border: 1px solid #333;
+  background: var(--panel-bg);
+  padding: 15px;
+  min-height: 150px;
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transition: background 0.5s, height 0.3s;
+  scroll-behavior: smooth;
+}
+
+#narrative p {
+  margin-bottom: 15px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll indicator for narrative */
+.scroll-indicator {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(160, 160, 255, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.9em;
+  cursor: pointer;
+  z-index: 10;
+  transition: opacity 0.3s ease;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.05); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+/* Action Buttons Container */
+#actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Status Bars */
+.status-bars {
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(26, 26, 26, 0.7);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.status-bars:hover {
+  transform: translateY(-2px);
+}
+
+.status-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.status-label {
+  width: 80px;
+  font-weight: bold;
+}
+
+.bar-container {
+  flex-grow: 1;
+  height: 15px;
+  background: #333;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0 10px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.bar {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.health-bar { background: var(--health-gradient); }
+.stamina-bar { background: var(--stamina-gradient); }
+.morale-bar { background: var(--morale-gradient); }
+
+.bar-value {
+  width: 80px;
+  text-align: right;
+}
+
+/* Panels styling (profile, inventory, quest log) */
+.game-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 90%;
+  width: 600px;
+  max-height: 80vh;
+  background: var(--dark-panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  overflow-y: auto;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.game-panel.active {
+  opacity: 1;
+  pointer-events: auto;
+  animation: panelFadeIn 0.3s ease-out forwards;
+}
+
+@keyframes panelFadeIn {
+  from { opacity: 0; transform: translate(-50%, -40%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+.game-panel h3 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.panel-content {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.panel-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.panel-close:hover {
+  color: var(--accent-color);
+}
+
+/* Overlay for panels */
+.panel-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 90;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.panel-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Mission Interface */
+.mission-interface {
+  background: var(--panel-bg);
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  max-width: 800px;
+  animation: missionFadeIn 0.4s ease-out;
+}
+
+@keyframes missionFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.mission-header {
+  text-align: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.mission-header h3 {
+  color: var(--primary-color);
+  margin: 0;
+}
+
+.mission-narrative {
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 6px;
+  border-left: 3px solid var(--primary-color);
+  animation: fadeIn 0.5s ease-out;
+}
+
+.mission-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mission-choice-btn {
+  background: var(--button-bg);
+  border: none;
+  color: var(--text-color);
+  padding: 12px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: left;
+  font-size: 1em;
+  border-left: 3px solid transparent;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.mission-choice-btn:hover {
+  background: var(--button-hover);
+  transform: translateX(5px);
+  border-left: 3px solid var(--primary-color);
+}
+
+/* NPC Dialog styling */
+.npc-dialog {
+  background: rgba(30, 41, 59, 0.95);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 600px;
+  z-index: 100;
+  border: 1px solid var(--border-color);
+  animation: dialogFadeIn 0.3s ease-out;
+}
+
+@keyframes dialogFadeIn {
+  from { opacity: 0; transform: translate(-50%, -45%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+.npc-dialog-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.npc-avatar {
+  width: 50px;
+  height: 50px;
+  background: #333;
+  border-radius: 50%;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.npc-name {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+/* Combat Interface */
+#combatInterface {
+  background: rgba(20, 20, 20, 0.95);
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  animation: combatFadeIn 0.4s ease-out;
+}
+
+@keyframes combatFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#combatHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding: 15px;
+  margin: 10px 0 20px 0;
+  background: rgba(30, 30, 45, 0.7);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.combat-health-container {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background: rgba(20, 20, 30, 0.5);
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
+
+.combat-health-bar {
+  height: 25px;
+  background: #333;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+#playerCombatHealth {
+  background: var(--health-gradient);
+  height: 100%;
+  width: 100%;
+  transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#enemyCombatHealth {
+  background: linear-gradient(to right, #8E0E00, #1F1C18);
+  height: 100%;
+  width: 100%;
+  transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#combatLog {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  padding: 20px;
+  height: 250px;
+  overflow-y: auto;
+  margin: 15px 0;
+  border-radius: 8px;
+  font-size: 1.1em;
+  background: rgba(10, 10, 15, 0.8);
+}
+
+#combatLog p {
+  margin-bottom: 12px;
+  line-height: 1.5;
+  border-bottom: 1px solid rgba(70, 70, 90, 0.3);
+  padding-bottom: 8px;
+}
+
+#combatActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Distance, stance, and environment indicators */
+#distanceContainer, #stanceContainer, #environmentContainer, #momentumContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+#distanceIndicator {
+  flex: 1;
+  height: 20px;
+  background: #333;
+  border-radius: 4px;
+  position: relative;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+#positionToken {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #4b6bff;
+  top: -2px;
+  transform: translateX(-50%);
+  transition: left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Notification styling */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--info-color);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 4px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.notification.success {
+  background: var(--success-color);
+}
+
+.notification.warning {
+  background: var(--warning-color);
+}
+
+.notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Achievement notification */
+.achievement-notification {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(40, 40, 40, 0.9);
+  border: 2px solid var(--primary-color);
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  animation: achievement-slide-in 0.5s ease-out, achievement-fade-out 0.5s ease-in 4.5s forwards;
+}
+
+.achievement-icon {
+  font-size: 2em;
+}
+
+.achievement-content {
+  flex-grow: 1;
+}
+
+.achievement-title {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  color: var(--primary-color);
+}
+
+.achievement-name {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 3px 0;
+}
+
+.achievement-description {
+  font-size: 0.9em;
+  color: #aaa;
+}
+
+@keyframes achievement-slide-in {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes achievement-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Character Creation Styles */
+.creation-step {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.creation-step.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.creation-step:not(.active) {
+  opacity: 0;
+  transform: translateY(30px);
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Responsive media queries */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+  
+  .mission-interface, .npc-dialog {
+    width: 95%;
+    padding: 15px;
+  }
+  
+  .game-panel {
+    width: 95%;
+    padding: 15px;
+  }
+  
+  .action-btn, .menu-button {
+    padding: 8px 15px;
+    font-size: 0.9em;
+  }
+}
+
+.combat-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background: rgba(18, 18, 24, 0.98);
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}

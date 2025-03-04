@@ -10,6 +10,11 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("Mission system initialized with", window.missionSystem.availableMissions.length, "available missions");
   }
 
+  if (window.initModernUI) {
+    window.initModernUI();
+    console.log("Modern UI system initialized");
+  }
+
   // Set up event listeners for character creation buttons
   document.getElementById('paanic-button').addEventListener('click', function() {
     window.selectOrigin('Paanic');
@@ -36,17 +41,27 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('start-adventure-button').addEventListener('click', window.startAdventure);
   
   // Add event listeners for panel close buttons
-  document.querySelector('.profile-close').addEventListener('click', function() {
+// Add event listeners for panel close buttons
+const profileCloseBtn = document.querySelector('.profile-close');
+if (profileCloseBtn) {
+  profileCloseBtn.addEventListener('click', function() {
     document.getElementById('profile').classList.add('hidden');
   });
-  
-  document.querySelector('.inventory-close').addEventListener('click', function() {
+}
+
+const inventoryCloseBtn = document.querySelector('.inventory-close');
+if (inventoryCloseBtn) {
+  inventoryCloseBtn.addEventListener('click', function() {
     document.getElementById('inventory').classList.add('hidden');
   });
-  
-  document.querySelector('.quest-log-close').addEventListener('click', function() {
+}
+
+const questLogCloseBtn = document.querySelector('.quest-log-close');
+if (questLogCloseBtn) {
+  questLogCloseBtn.addEventListener('click', function() {
     document.getElementById('questLog').classList.add('hidden');
   });
+}
   
   console.log("Game initialized and ready to play!");
 });

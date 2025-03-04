@@ -755,6 +755,15 @@ window.updateTimeAndDay = function(minutesToAdd) {
 // Add mission system to combat outcome handler
 const originalEndCombatWithResult = window.endCombatWithResult;
 window.endCombatWithResult = function(result) {
+
+  // Check if this hook hasn't already been set
+if (!window._endCombatHooked) {
+  window._endCombatHooked = true;
+  const originalEndCombatWithResult = window.endCombatWithResult;
+  window.endCombatWithResult = function(result) {
+  }
+}
+
   // Check if this is mission combat
   if (window.gameState.inMissionCombat) {
     console.log("Ending mission combat with result:", result);

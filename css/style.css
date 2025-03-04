@@ -345,6 +345,9 @@ header {
   padding: 15px;
   border-radius: 6px;
   border-left: 3px solid #a0a0ff;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .mission-choices {
