@@ -562,3 +562,92 @@ header {
 .mission-action-icon.diplomatic {
   background: #b74bff;
 }
+
+/* CSS Styles for Combat Stamina UI 
+   Add this to your game's CSS file */
+
+   #staminaContainer {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid rgba(75, 255, 145, 0.3);
+  }
+  
+  #playerCombatStaminaValue {
+    font-weight: bold;
+    color: #4bff91;
+    font-size: 1.1em;
+    margin-top: 4px;
+    transition: color 0.3s ease;
+  }
+  
+  #staminaRegenValue {
+    font-weight: bold;
+    color: #4bff91;
+    font-size: 1.1em;
+    margin-top: 4px;
+  }
+  
+  /* Stamina level indicators */
+  .stamina-high {
+    color: #4bff91 !important; /* Green */
+  }
+  
+  .stamina-medium {
+    color: #ffb74b !important; /* Orange */
+  }
+  
+  .stamina-low {
+    color: #ff4b4b !important; /* Red */
+  }
+  
+  /* Rest button styling */
+  [data-action="rest_combat"] {
+    background-color: #2d2d4d !important;
+    border: 1px solid #4b4bff !important;
+    color: #e0e0ff !important;
+  }
+  
+  [data-action="rest_combat"]:hover {
+    background-color: #3d3d6d !important;
+  }
+  
+  /* Stamina cost indicators on action buttons */
+  .stamina-cost {
+    display: inline-block;
+    font-size: 0.8em;
+    margin-left: 5px;
+    padding: 1px 4px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+  }
+  
+  /* Disabled action due to stamina */
+  .action-btn.stamina-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #3d3d3d !important;
+    position: relative;
+  }
+  
+  .action-btn.stamina-disabled::after {
+    content: "Not enough stamina";
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #ff4b4b;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+  
+  .action-btn.stamina-disabled:hover::after {
+    opacity: 1;
+  }

@@ -227,6 +227,18 @@ function showMissionDetails(mission, npcId) {
   
   if (!npcDialog) return;
   
+  // Ensure mission has all required properties
+  mission = mission || {};
+  mission.title = mission.title || "Unknown Mission";
+  mission.description = mission.description || "No description available.";
+  mission.difficulty = mission.difficulty || 1;
+  
+  // Ensure rewards object exists
+  mission.rewards = mission.rewards || {};
+  mission.rewards.experience = mission.rewards.experience || 25;
+  mission.rewards.taelors = mission.rewards.taelors || 10;
+  mission.rewards.items = mission.rewards.items || [];
+  
   // Clear previous content
   npcDialog.innerHTML = '';
   
@@ -297,7 +309,7 @@ function showMissionDetails(mission, npcId) {
   acceptBtn.className = 'action-btn';
   acceptBtn.textContent = 'Accept Mission';
   acceptBtn.onclick = function() {
-    acceptMission(mission.id, npcId);
+    acceptMission(mission.id || mission.type, npcId);
   };
   
   // Back button
@@ -393,8 +405,10 @@ function closeNPCDialog(npcId) {
   document.body.removeChild(npcDialog);
 }
 
-// Add NPC interaction to the action handler
-const originalHandleAction = window.handleAction;
+// Store the original handleAction only once at the top level
+const npcHandleActionOriginal = window.handleAction || function() {};
+
+// Add NPC interaction to the action handler - use the original variable
 window.handleAction = function(action) {
   // Check if this is an NPC interaction
   if (action === 'talk_commander') {
@@ -406,48 +420,12 @@ window.handleAction = function(action) {
   } else if (action === 'talk_quartermaster') {
     window.createNPCDialog('quartermaster');
     return;
-  }
-  
-  // Otherwise, use the original handler
-  originalHandleAction(action);
-};
-
-// Update action buttons to include NPC interactions
-const originalUpdateActionButtons = window.updateActionButtons;
-window.updateActionButtons = function() {
-  originalUpdateActionButtons();
-  
-  // Only add NPC interactions if not in battle or mission
-  if (!window.gameState.inBattle && !window.gameState.inMission) {
-    const actionsContainer = document.getElementById('actions');
-    
-    // Add NPC interaction buttons with null checks
-    if (window.missionSystem && window.missionSystem.canGetMissionsFrom 
-        && window.missionSystem.canGetMissionsFrom('commander')) {
-      window.addActionButton('Talk to Commander', 'talk_commander', actionsContainer);
-    }
-    
-    if (window.missionSystem && window.missionSystem.canGetMissionsFrom 
-        && window.missionSystem.canGetMissionsFrom('sergeant')) {
-      window.addActionButton('Talk to Sergeant', 'talk_sergeant', actionsContainer);
-    }
-    
-    if (window.missionSystem && window.missionSystem.canGetMissionsFrom 
-        && window.missionSystem.canGetMissionsFrom('quartermaster')) {
-      window.addActionButton('Talk to Quartermaster', 'talk_quartermaster', actionsContainer);
-    }
-  }
-};
-
-// Extend quest log to include mission history
-const originalHandleAction_questLog = window.handleAction;
-window.handleAction = function(action) {
-  if (action === 'questLog') {
+  } else if (action === 'questLog') {
     // Update quest log before showing
     const questList = document.getElementById('questList');
     
     // Add mission history to quest log (after regular quests)
-    if (window.missionSystem.missionHistory.length > 0) {
+    if (window.missionSystem && window.missionSystem.missionHistory && window.missionSystem.missionHistory.length > 0) {
       questList.innerHTML += `<h3>Mission History</h3>`;
       
       window.missionSystem.missionHistory.forEach((mission, index) => {
@@ -463,6 +441,80 @@ window.handleAction = function(action) {
     }
   }
   
-  // Call the original function
-  originalHandleAction_questLog(action);
+  // Otherwise, use the original handler
+  npcHandleActionOriginal(action);
 };
+
+// Update action buttons to include NPC interactions
+const updateActionButtonsOriginal = window.updateActionButtons || function() {};
+window.updateActionButtons = function() {
+  updateActionButtonsOriginal();
+  
+  // Only add NPC interactions if not in battle or mission
+  if (!window.gameState.inBattle && !window.gameState.inMission) {
+    const actionsContainer = document.getElementById('actions');
+    
+    // Add NPC interaction buttons with null checks
+    if (window.missionSystem && window.missionSystem.canGetMissionsFrom 
+        && window.missionSystem.canGetMissionsFrom('commander')) {
+      // Use the helper function if available, otherwise create button directly
+      if (window.UI && window.UI.addActionButton) {
+        window.UI.addActionButton('Talk to Commander', 'talk_commander', actionsContainer);
+      } else if (window.addActionButton) {
+        window.addActionButton('Talk to Commander', 'talk_commander', actionsContainer);
+      } else {
+        const btn = document.createElement('button');
+        btn.className = 'action-btn';
+        btn.textContent = 'Talk to Commander';
+        btn.setAttribute('data-action', 'talk_commander');
+        btn.onclick = function() {
+          window.handleAction('talk_commander');
+        };
+        actionsContainer.appendChild(btn);
+      }
+    }
+    
+    if (window.missionSystem && window.missionSystem.canGetMissionsFrom 
+        && window.missionSystem.canGetMissionsFrom('sergeant')) {
+      if (window.UI && window.UI.addActionButton) {
+        window.UI.addActionButton('Talk to Sergeant', 'talk_sergeant', actionsContainer);
+      } else if (window.addActionButton) {
+        window.addActionButton('Talk to Sergeant', 'talk_sergeant', actionsContainer);
+      } else {
+        const btn = document.createElement('button');
+        btn.className = 'action-btn';
+        btn.textContent = 'Talk to Sergeant';
+        btn.setAttribute('data-action', 'talk_sergeant');
+        btn.onclick = function() {
+          window.handleAction('talk_sergeant');
+        };
+        actionsContainer.appendChild(btn);
+      }
+    }
+    
+    if (window.missionSystem && window.missionSystem.canGetMissionsFrom 
+        && window.missionSystem.canGetMissionsFrom('quartermaster')) {
+      if (window.UI && window.UI.addActionButton) {
+        window.UI.addActionButton('Talk to Quartermaster', 'talk_quartermaster', actionsContainer);
+      } else if (window.addActionButton) {
+        window.addActionButton('Talk to Quartermaster', 'talk_quartermaster', actionsContainer);
+      } else {
+        const btn = document.createElement('button');
+        btn.className = 'action-btn';
+        btn.textContent = 'Talk to Quartermaster';
+        btn.setAttribute('data-action', 'talk_quartermaster');
+        btn.onclick = function() {
+          window.handleAction('talk_quartermaster');
+        };
+        actionsContainer.appendChild(btn);
+      }
+    }
+  }
+};
+
+// Initialize UI system when document is ready
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.UI && typeof window.UI.init === 'function') {
+    window.UI.init();
+  }
+});
