@@ -6,7 +6,7 @@ window.origins = {
       <p>You enlisted with visions of glory and honor. As a Paanic soldier, you believe in order, discipline, and tradition. Yet the war you now face is about expansion and the Empire's relentless hunger for resources and prestige.</p>
     `,
     careers: [
-      { title: "Paanic Regular", description: "Molded by strict drills and shield formations, you are the unyielding wall of the Empire's armies." },
+      { title: "Regular", description: "Molded by strict drills and shield formations, you are the unyielding wall of the Empire's armies." },
       { title: "Geister Initiate", description: "Trained in the dark arts of geisting, you confront the restless dead amid ancient rites and urgent demands." },
       { title: "Paanic Noble Youth", description: "Born to privilege but forged in war, you combine noble heritage with the rigorous demands of battlefield scouting." }
     ]
@@ -17,8 +17,8 @@ window.origins = {
       <p>Your loyalty to the Empire was secured by political maneuvering and power plays. Now, marching east under the imperial banner, you must prove your mettle in a landscape where honor and ambition collide.</p>
     `,
     careers: [
-      { title: "Nesian Scout", description: "With a re-engineered matchlock rifle from ancient ruins, you serve as a keen-eyed forward observer." },
-      { title: "Nesian Squire", description: "Trained under a noble banner, you mastered swordsmanship and etiquette, now tested in brutal warfare." },
+      { title: "Scout", description: "With a re-engineered matchlock rifle from ancient ruins, you serve as a keen-eyed forward observer." },
+      { title: "Squire", description: "Trained under a noble banner, you mastered swordsmanship and etiquette, now tested in brutal warfare." },
       { title: "Castellan Cavalry", description: "Riding advanced equestrian constructs, you embody Nesia's proud martial tradition, though survival is never assured." }
     ]
   },
@@ -28,9 +28,9 @@ window.origins = {
       <p>You joined the army either for coin or to escape the intrigues of merchant lords. Your resourcefulness, honed on the docks, may become your greatest asset in the chaos of war.</p>
     `,
     careers: [
-      { title: "Lunarine Sellsword", description: "Having fought for coin in crowded taverns, you now wield your blade for survival and glory under the imperial banner." },
-      { title: "Lunarine Marine", description: "Trained on merchant galleys and patrol vessels, you excel in confined, chaotic combat—skills to be adapted for land warfare." },
-      { title: "Lunarine Corsair", description: "Once a free-spirited raider of the coasts, you now serve the empire, balancing your rogue's heart with disciplined ranks." }
+      { title: "Sellsword", description: "Having fought for coin in crowded taverns, you now wield your blade for survival and glory under the imperial banner." },
+      { title: "Marine", description: "Trained on merchant galleys and patrol vessels, you excel in confined, chaotic combat—skills to be adapted for land warfare." },
+      { title: "Corsair", description: "Once a free-spirited raider of the coasts, you now serve the empire, balancing your rogue's heart with disciplined ranks." }
     ]
   },
   "Wyrdman": {
@@ -48,8 +48,8 @@ window.origins = {
 
 // Primary attribute ranges based on origin
 window.statRanges = {
-  "Paanic": { phy: [1, 2], men: [1, 2] },
-  "Nesian": { phy: [1, 2], men: [2, 3] },
-  "Lunarine": { phy: [1, 2], men: [1, 2] },
-  "Wyrdman": { phy: [2, 3], men: [1, 1] }
+  "Paanic": { phy: [1, 3], men: [1, 3] },
+  "Nesian": { phy: [2, 2], men: [2, 3] },
+  "Lunarine": { phy: [1, 2], men: [2, 3] },
+  "Wyrdman": { phy: [3, 3], men: [1, 1] }
 };

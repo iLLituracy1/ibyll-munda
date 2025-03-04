@@ -313,3 +313,249 @@ header {
 .career-description p {
   margin-bottom: 15px;
 }
+
+.mission-interface {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid #444;
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.mission-header {
+  text-align: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 10px;
+}
+
+.mission-header h3 {
+  color: #a0a0ff;
+  margin: 0;
+}
+
+.mission-narrative {
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 6px;
+  border-left: 3px solid #a0a0ff;
+}
+
+.mission-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mission-choice-btn {
+  background: #333;
+  border: none;
+  color: #e0e0e0;
+  padding: 12px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: left;
+  font-size: 1em;
+  border-left: 3px solid transparent;
+}
+
+.mission-choice-btn:hover {
+  background: #444;
+  transform: translateX(5px);
+  border-left: 3px solid #a0a0ff;
+}
+
+.mission-choice-btn.tactical {
+  border-left: 3px solid #4bbfff;
+}
+
+.mission-choice-btn.aggressive {
+  border-left: 3px solid #ff4b4b;
+}
+
+.mission-choice-btn.conservative {
+  border-left: 3px solid #4bff91;
+}
+
+.mission-choice-btn.disciplined {
+  border-left: 3px solid #ffb74b;
+}
+
+.mission-choice-btn.diplomatic {
+  border-left: 3px solid #b74bff;
+}
+
+/* NPC Mission Dialog Styles */
+.npc-dialog {
+  background: rgba(30, 41, 59, 0.95);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 600px;
+  z-index: 100;
+  border: 1px solid #444;
+}
+
+.npc-dialog-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 10px;
+}
+
+.npc-avatar {
+  width: 50px;
+  height: 50px;
+  background: #333;
+  border-radius: 50%;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+}
+
+.npc-name {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #a0a0ff;
+}
+
+.npc-dialog-content {
+  margin-bottom: 20px;
+}
+
+.npc-dialog-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mission-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.mission-card {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-left: 4px solid #666;
+}
+
+.mission-card:hover {
+  background: rgba(0, 0, 0, 0.3);
+  transform: translateX(5px);
+}
+
+.mission-card.difficulty-1 {
+  border-left-color: #4bff91; /* Easy - green */
+}
+
+.mission-card.difficulty-2 {
+  border-left-color: #ffb74b; /* Medium - orange */
+}
+
+.mission-card.difficulty-3 {
+  border-left-color: #ff4b4b; /* Hard - red */
+}
+
+.mission-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #e0e0e0;
+}
+
+.mission-difficulty {
+  font-size: 0.8em;
+  color: #aaa;
+  margin-bottom: 10px;
+}
+
+.mission-description {
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.mission-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+/* Mission log styles for quest log panel */
+.mission-log-entry {
+  border-left: 3px solid #a0a0ff;
+  margin-bottom: 15px;
+  padding-left: 10px;
+}
+
+.mission-log-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.mission-log-status {
+  font-size: 0.9em;
+  margin-bottom: 10px;
+}
+
+.mission-log-status.completed {
+  color: #4bff91;
+}
+
+.mission-log-status.failed {
+  color: #ff4b4b;
+}
+
+.mission-log-description {
+  font-size: 0.9em;
+  color: #bbb;
+}
+
+/* Mission action icons */
+.mission-action-icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.mission-action-icon.tactical {
+  background: #4bbfff;
+}
+
+.mission-action-icon.aggressive {
+  background: #ff4b4b;
+}
+
+.mission-action-icon.conservative {
+  background: #4bff91;
+}
+
+.mission-action-icon.disciplined {
+  background: #ffb74b;
+}
+
+.mission-action-icon.diplomatic {
+  background: #b74bff;
+}

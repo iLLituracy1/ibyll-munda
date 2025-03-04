@@ -5,6 +5,11 @@
 document.addEventListener('DOMContentLoaded', function() {
   console.log("Game initializing...");
 
+  if (window.missionSystem) {
+    window.missionSystem.generateAvailableMissions();
+    console.log("Mission system initialized with", window.missionSystem.availableMissions.length, "available missions");
+  }
+
   // Set up event listeners for character creation buttons
   document.getElementById('paanic-button').addEventListener('click', function() {
     window.selectOrigin('Paanic');

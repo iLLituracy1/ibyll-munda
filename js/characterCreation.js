@@ -147,10 +147,10 @@ window.startAdventure = function() {
   window.updateActionButtons();
   
   // Set initial narrative
-  window.setNarrative(`${window.player.name}, a ${window.player.career.title} of ${window.player.origin} heritage. Now, you stand at the edge of your Kasvaari's Camp, the flickering lanterns and distant clang of the forges marking the heartbeat of an army in preparation. Here, amidst the hardened warriors and the banners of noble Charters, you are no longer a traveler—you are a soldier, bound to duty, drawn by the call of empire.<br><br>
-
-The Western Hierarchate is a land of towering fortresses and ancient battlefields, a realm where the scars of past campaigns linger in the earth itself. The Arrasi Peninsula lies beyond the western horizon, its crystalline plains an enigma even to those who have fought there before. Soon, you will march upon those lands, crossing the vast Wall of Nesia, where the empire's dominion falters against the unknown.<br><br>
-For now, your place is here, among your kin and comrades, within the Kasvaari's Camp, where the scent of oiled steel and the murmur of hushed war councils fill the air. What will you do first?`);
+  window.setNarrative(`${window.player.name}, a ${window.player.career.title} of ${window.player.origin} heritage, the road has been long. Nearly a season has passed since you departed the heartlands of Paan'eun, the distant spires of Cennen giving way to the endless hinterlands of the empire. Through the great riverlands and the mountain passes, across the dust-choked roads of the interior, and finally westward into the feudalscape of the Hierarchate, you have traveled. Each step has carried you further from home, deeper into the shadow of war.<br><br>
+  Now, you stand at the edge of your Kasvaari's Camp, the flickering lanterns and distant clang of the forges marking the heartbeat of an army in preparation. Here, amidst the hardened warriors and the banners of noble Charters, you are no longer a traveler—you are a soldier, bound to duty, drawn by the call of empire.<br><br>
+  The Western Hierarchate is a land of towering fortresses and ancient battlefields, a realm where the scars of past campaigns linger in the earth itself. The Arrasi Peninsula lies beyond the western horizon, its crystalline plains an enigma even to those who have fought there before. Soon, you will march upon those lands, crossing the vast Wall of Nesia, where the empire's dominion falters against the unknown.<br><br>
+  For now, your place is here, among your kin and comrades, within the Kasvaari's Camp, where the scent of oiled steel and the murmur of hushed war councils fill the air. What will you do first?`);
 };
 
 window.generateCharacterSummary = function() {
@@ -196,13 +196,14 @@ window.setInitialSkills = function(career) {
     window.player.skills.survival = Number(1.5);
     window.player.skills.tactics = Number(1);
   } else if (career.includes("Geister")) {
+    window.player.skills.melee = Number(1);
     window.player.skills.arcana = Number(2);
     window.player.skills.discipline = Number(1.5);
     window.player.skills.tactics = Number(1);
   } else if (career.includes("Berserker") || career.includes("Primal")) {
     window.player.skills.melee = Number(2.5);
     window.player.skills.survival = Number(1.5);
-  } else if (career.includes("Sellsword") || career.includes("Mercenary")) {
+  } else if (career.includes("Sellsword") || career.includes("Marine")) {
     window.player.skills.melee = Number(1.5);
     window.player.skills.marksmanship = Number(1.5);
     window.player.skills.survival = Number(1);
@@ -210,6 +211,21 @@ window.setInitialSkills = function(career) {
     window.player.skills.melee = Number(2);
     window.player.skills.command = Number(1.5);
     window.player.skills.tactics = Number(1);
+    window.player.skills.survival = Number(1);
+  } else if (career.includes("Marauder")) {
+    window.player.skills.melee = Number(1.5);
+    window.player.skills.command = Number(0.5);
+    window.player.skills.tactics = Number(1);
+  } else if (career.includes("Corsair")) {
+    window.player.skills.melee = Number(1);
+    window.player.skills.survival = Number(1);
+    window.player.skills.tactics = Number(1);
+    window.player.skills.organization = Number(1);
+  } else if (career.includes("Squire")) {
+    window.player.skills.melee = Number(.5);
+    window.player.skills.discipline = Number(.5);
+    window.player.skills.organization = Number(1);
+    window.player.skills.survival = Number(.5);
   }
   
   // Add a bit of randomness to initial skill values - ensure we use numbers

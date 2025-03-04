@@ -186,20 +186,29 @@ window.updateProfileIfVisible = function() {
   }
 };
 
-// Function to set narrative text
+// Function to set narrative text with improved scrolling
 window.setNarrative = function(text) {
   // Replace the narrative with new text instead of appending
   const narrativeDiv = document.getElementById('narrative');
   narrativeDiv.innerHTML = `<p>${text}</p>`;
-  narrativeDiv.scrollTop = 0; // Scroll to top
+  
+  // Ensure scroll to top
+  requestAnimationFrame(() => {
+    narrativeDiv.scrollTop = 0;
+  });
 };
 
 // Function to add to narrative text
+// Function to add to narrative text with improved auto-scrolling
 window.addToNarrative = function(text) {
   // Append to existing narrative
   const narrativeDiv = document.getElementById('narrative');
   narrativeDiv.innerHTML += `<p>${text}</p>`;
-  narrativeDiv.scrollTop = narrativeDiv.scrollHeight; // Scroll to bottom
+  
+  // Ensure scroll to bottom with requestAnimationFrame
+  requestAnimationFrame(() => {
+    narrativeDiv.scrollTop = narrativeDiv.scrollHeight;
+  });
 };
 
 // Show notification function
@@ -242,3 +251,74 @@ window.showAchievement = function(achievementId) {
     document.body.removeChild(notificationElement);
   }, 5000);
 };
+
+// Add scroll indicator when new content is below view
+function addScrollIndicator() {
+  const narrative = document.getElementById('narrative');
+  if (!narrative) return;
+  
+  // Create indicator if it doesn't exist
+  let indicator = document.getElementById('scroll-indicator');
+  if (!indicator) {
+    indicator = document.createElement('div');
+    indicator.id = 'scroll-indicator';
+    indicator.className = 'scroll-indicator';
+    indicator.innerHTML = '↓ New content below ↓';
+    indicator.style.display = 'none';
+    indicator.style.position = 'absolute';
+    indicator.style.bottom = '10px';
+    indicator.style.left = '50%';
+    indicator.style.transform = 'translateX(-50%)';
+    indicator.style.background = 'rgba(160, 160, 255, 0.8)';
+    indicator.style.color = 'white';
+    indicator.style.padding = '5px 10px';
+    indicator.style.borderRadius = '15px';
+    indicator.style.fontSize = '0.9em';
+    indicator.style.cursor = 'pointer';
+    indicator.style.zIndex = '10';
+    indicator.style.transition = 'opacity 0.3s ease';
+    
+    // Click to scroll down
+    indicator.addEventListener('click', () => {
+      narrative.scrollTop = narrative.scrollHeight;
+      indicator.style.display = 'none';
+    });
+    
+    // Parent container needs position relative
+    const container = narrative.parentElement;
+    if (container.style.position !== 'relative') {
+      container.style.position = 'relative';
+    }
+    
+    container.appendChild(indicator);
+  }
+  
+  // Monitor scroll position
+  narrative.addEventListener('scroll', () => {
+    // If we're near the bottom, hide the indicator
+    const isNearBottom = narrative.scrollHeight - narrative.scrollTop - narrative.clientHeight < 50;
+    
+    if (isNearBottom) {
+      indicator.style.display = 'none';
+    }
+  });
+  
+  // Enhance addToNarrative to show indicator when needed
+  const enhancedAddToNarrative = window.addToNarrative;
+  window.addToNarrative = function(text) {
+    // Call the previous function
+    enhancedAddToNarrative(text);
+    
+    // Check if we need to show the indicator
+    const isScrolledDown = narrative.scrollHeight - narrative.scrollTop - narrative.clientHeight > 50;
+    
+    if (isScrolledDown) {
+      indicator.style.display = 'block';
+    }
+  };
+}
+
+// Initialize the scroll indicator when document is ready
+document.addEventListener('DOMContentLoaded', function() {
+  addScrollIndicator();
+});
